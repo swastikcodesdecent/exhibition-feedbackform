@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>De Paul School — Feedback Console</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            display: ['"Plus Jakarta Sans"', 'sans-serif'],
+            cursive: ['"Pinyon Script"', 'cursive'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Floating School Exhibition Items */
+    .floating-item {
+      position: absolute;
+      pointer-events: none;
+      z-index: 0;
+      /* Keep behind main console card to prevent overlays */
+      color: rgba(59, 130, 246, 0.55);
+      /* Electric Blue */
+      filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.15));
+      will-change: transform, opacity;
+    }
+
+    .float-slow-1 {
+      animation: float1 7s infinite ease-in-out;
+    }
+
+    .float-slow-2 {
+      animation: float2 9s infinite ease-in-out;
+    }
+
+    .float-slow-3 {
+      animation: float3 8s infinite ease-in-out;
+    }
+
+    @keyframes float1 {
+
+      0%,
+      100% {
+        transform: translate3d(0, 0, 0) rotate(0deg);
+      }
+
+      50% {
+        transform: translate3d(10px, -20px, 0) rotate(15deg);
+      }
+    }
+
+    @keyframes float2 {
+
+      0%,
+      100% {
+        transform: translate3d(0, 0, 0) rotate(0deg);
+      }
+
+      50% {
+        transform: translate3d(-15px, -15px, 0) rotate(-20deg);
+      }
+    }
+
+    @keyframes float3 {
+
+      0%,
+      100% {
+        transform: translate3d(0, 0, 0) rotate(0deg);
+      }
+
+      50% {
+        transform: translate3d(5px, -25px, 0) rotate(10deg);
+      }
+    }
+
+    /* Scrolling Marquee Ribbon */
+    @keyframes marquee {
+      0% {
+        transform: translate3d(0, 0, 0);
+      }
+
+      100% {
+        transform: translate3d(-50%, 0, 0);
+      }
+    }
+
+    .animate-marquee {
+      animation: marquee 25s linear infinite;
+    }
+  </style>
+</head>
+
+<body
+  class="bg-slate-950 text-slate-100 min-h-screen flex items-center justify-center font-sans antialiased p-4 relative overflow-x-hidden">
+
+  <!-- Ambient Glow Effects -->
+  <div
+    class="fixed top-[-10%] left-[-10%] w-[50%] h-[50%] bg-blue-600/15 rounded-full blur-[120px] pointer-events-none z-0">
+  </div>
+  <div
+    class="fixed bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-white/5 rounded-full blur-[120px] pointer-events-none z-0">
+  </div>
+  <!-- Dynamic Ambient Cursor Light -->
+  <div id="cursorGlow"
+    class="fixed pointer-events-none -translate-x-1/2 -translate-y-1/2 rounded-full blur-[100px] opacity-0 transition-opacity duration-700 z-0 select-none"
+    style="width: 500px; height: 500px; background: radial-gradient(circle, rgba(59, 130, 246, 0.12) 0%, rgba(255, 255, 255, 0.03) 40%, rgba(59, 130, 246, 0) 70%);">
+  </div>
+
+
+
+  <!-- Main Page Floating Exhibition Elements (Subtle Background) -->
+  <div id="bodyItemsContainer" class="absolute inset-0 pointer-events-none z-0 overflow-hidden"></div>
+
+  <!-- Rolling Ribbon Background (Top Banner) -->
+  <div
+    class="absolute top-0 left-0 right-0 overflow-hidden bg-gradient-to-r from-blue-600 via-sky-500 to-blue-600 py-3 z-10 select-none shadow-[0_4px_25px_rgba(59,130,246,0.15)] border-b border-blue-400/20 pointer-events-none">
+    <div
+      class="flex whitespace-nowrap animate-marquee text-white font-display text-xs md:text-sm tracking-[0.15em] font-extrabold uppercase">
+      <span class="inline-block pr-8">STUDENT INSIGHTS &bull; DID YOU KNOW? WRITING NOTES BY HAND IMPROVES LONG-TERM RETENTION &bull; EXERCISE STIMULATES BOTH HEMISPHERES OF THE BRAIN, BOOSTING ACADEMIC FOCUS &bull; MUSIC EDUCATION ENHANCES SPATIAL-TEMPORAL MATH SKILLS &bull;</span>
+      <span class="inline-block pr-8" aria-hidden="true">STUDENT INSIGHTS &bull; DID YOU KNOW? WRITING NOTES BY HAND IMPROVES LONG-TERM RETENTION &bull; EXERCISE STIMULATES BOTH HEMISPHERES OF THE BRAIN, BOOSTING ACADEMIC FOCUS &bull; MUSIC EDUCATION ENHANCES SPATIAL-TEMPORAL MATH SKILLS &bull;</span>
+    </div>
+  </div>
+
+  <!-- PRELOADER OVERLAY -->
+  <div id="preloaderOverlay"
+    class="fixed inset-0 bg-slate-950 flex flex-col items-center justify-center z-[999] transition-all duration-500 overflow-hidden">
+
+    <!-- Preloader Floating Exhibition Elements Container -->
+    <div id="preloaderItemsContainer" class="absolute inset-0 pointer-events-none z-0"></div>
+
+    <div
+      class="text-center flex flex-col items-center max-w-md w-11/12 p-8 rounded-3xl bg-slate-900/60 backdrop-blur-xl border border-slate-800/80 shadow-2xl relative z-10">
+      <div class="relative w-48 h-48 mb-6 flex items-center justify-center">
+        <!-- Logo Image (Bigger) -->
+        <img src="depaul-school-logo.png" alt="De Paul School Logo"
+          class="w-40 h-40 object-contain animate-[preloaderPulse_1.8s_infinite_ease-in-out] relative z-10" />
+        <!-- Custom pulsing ring background -->
+        <div
+          class="absolute inset-2 border-2 border-blue-500/30 rounded-full animate-[ringGlow_1.8s_infinite_ease-out]">
+        </div>
+      </div>
+      <h2 class="font-display font-extrabold text-3xl md:text-4xl text-white tracking-wide uppercase">DE PAUL SCHOOL
+      </h2>
+      <h3 class="font-cursive text-blue-400 mt-2 text-3xl font-medium tracking-normal normal-case">Exhibition</h3>
+      <div class="w-full h-1 bg-slate-800 rounded-full overflow-hidden mt-8">
+        <div id="preloaderBarFill"
+          class="w-0 h-full bg-gradient-to-r from-blue-600 to-sky-400 rounded-full transition-all duration-[5500ms] ease-out">
+        </div>
+      </div>
+      <div class="mt-4 text-xs md:text-sm text-slate-500 font-mono uppercase tracking-[0.25em]">
+        Exhibition Portal by <span class="text-blue-500 font-extrabold">VYRONIX Labs</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN CONSOLE CARD -->
+  <main
+    class="w-full max-w-xl bg-slate-900/65 backdrop-blur-xl border border-slate-800/80 rounded-3xl p-6 md:p-8 shadow-2xl z-10 relative my-8">
+    <div class="text-center mb-8">
+      <!-- Logo Image (Bigger) -->
+      <img src="depaul-school-logo.png" alt="De Paul School Logo"
+        class="w-36 h-36 object-contain mx-auto mb-4 hover:scale-105 hover:rotate-2 transition-transform duration-300 filter drop-shadow-[0_0_15px_rgba(239,68,68,0.15)]" />
+      <h1 class="font-display font-extrabold text-2xl md:text-3xl text-white tracking-wide uppercase">DE PAUL SCHOOL
+      </h1>
+      <p class="font-cursive text-slate-300 text-3xl mt-2 tracking-normal normal-case">Exhibition Feedback Console</p>
+    </div>
+
+    <form id="feedbackForm" class="space-y-6">
+      <!-- Hidden Input for Rating -->
+      <input type="hidden" id="ratingSlider" value="5" />
+
+      <!-- Student Name Input -->
+      <div class="space-y-2">
+        <label for="studentName" class="block text-xs font-bold text-slate-400 tracking-wider uppercase">Student
+          Name</label>
+        <input type="text" id="studentName" required placeholder="Enter full name" autocomplete="off"
+          class="w-full bg-slate-950/80 border border-slate-800 rounded-2xl px-4 py-3 text-white font-medium placeholder-slate-600 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30 transition-all" />
+      </div>
+
+      <!-- Clickable Rating grid -->
+      <div class="space-y-2">
+        <label class="block text-xs font-bold text-slate-400 tracking-wider uppercase flex justify-between">
+          <span>Rate Your Experience</span>
+          <span class="text-slate-500 normal-case font-medium">(1 = Low, 10 = High)</span>
+        </label>
+        <div class="grid grid-cols-5 md:grid-cols-10 gap-2" id="ratingsContainer">
+          <button type="button"
+            class="rating-btn h-12 bg-slate-950/80 hover:bg-slate-800 border border-slate-800 rounded-xl font-mono text-sm font-semibold text-slate-400 hover:text-white transition-all active:scale-95 flex items-center justify-center"
+            data-value="1">1</button>
+          <button type="button"
+            class="rating-btn h-12 bg-slate-950/80 hover:bg-slate-800 border border-slate-800 rounded-xl font-mono text-sm font-semibold text-slate-400 hover:text-white transition-all active:scale-95 flex items-center justify-center"
+            data-value="2">2</button>
+          <button type="button"
+            class="rating-btn h-12 bg-slate-950/80 hover:bg-slate-800 border border-slate-800 rounded-xl font-mono text-sm font-semibold text-slate-400 hover:text-white transition-all active:scale-95 flex items-center justify-center"
+            data-value="3">3</button>
+          <button type="button"
+            class="rating-btn h-12 bg-slate-950/80 hover:bg-slate-800 border border-slate-800 rounded-xl font-mono text-sm font-semibold text-slate-400 hover:text-white transition-all active:scale-95 flex items-center justify-center"
+            data-value="4">4</button>
+          <button type="button"
+            class="rating-btn h-12 bg-slate-950/80 hover:bg-slate-800 border border-slate-800 rounded-xl font-mono text-sm font-semibold text-slate-400 hover:text-white transition-all active:scale-95 flex items-center justify-center"
+            data-value="5">5</button>
+          <button type="button"
+            class="rating-btn h-12 bg-slate-950/80 hover:bg-slate-800 border border-slate-800 rounded-xl font-mono text-sm font-semibold text-slate-400 hover:text-white transition-all active:scale-95 flex items-center justify-center"
+            data-value="6">6</button>
+          <button type="button"
+            class="rating-btn h-12 bg-slate-950/80 hover:bg-slate-800 border border-slate-800 rounded-xl font-mono text-sm font-semibold text-slate-400 hover:text-white transition-all active:scale-95 flex items-center justify-center"
+            data-value="7">7</button>
+          <button type="button"
+            class="rating-btn h-12 bg-slate-950/80 hover:bg-slate-800 border border-slate-800 rounded-xl font-mono text-sm font-semibold text-slate-400 hover:text-white transition-all active:scale-95 flex items-center justify-center"
+            data-value="8">8</button>
+          <button type="button"
+            class="rating-btn h-12 bg-slate-950/80 hover:bg-slate-800 border border-slate-800 rounded-xl font-mono text-sm font-semibold text-slate-400 hover:text-white transition-all active:scale-95 flex items-center justify-center"
+            data-value="9">9</button>
+          <button type="button"
+            class="rating-btn h-12 bg-slate-950/80 hover:bg-slate-800 border border-slate-800 rounded-xl font-mono text-sm font-semibold text-slate-400 hover:text-white transition-all active:scale-95 flex items-center justify-center"
+            data-value="10">10</button>
+        </div>
+        <div class="flex justify-between text-[10px] font-mono text-slate-500 tracking-wider uppercase px-1 pt-1">
+          <span>Low</span>
+          <span>Neutral</span>
+          <span>High</span>
+        </div>
+      </div>
+
+      <!-- Remarks Textarea -->
+      <div class="space-y-2">
+        <label for="remarks" class="block text-xs font-bold text-slate-400 tracking-wider uppercase">Remarks</label>
+        <textarea id="remarks" rows="4" placeholder="Share your thoughts about the exhibition..."
+          class="w-full bg-slate-950/80 border border-slate-800 rounded-2xl px-4 py-3 text-white font-medium placeholder-slate-600 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30 transition-all resize-none"></textarea>
+      </div>
+
+      <!-- Submit button -->
+      <button type="submit" id="transmitBtn"
+        class="w-full bg-blue-600 hover:bg-blue-500 text-white font-display font-bold py-4 rounded-2xl transition-all duration-200 active:scale-[0.98] shadow-lg shadow-blue-600/20 tracking-wider uppercase text-sm">
+        Submit Feedback
+      </button>
+      <p id="formStatus" class="text-center font-mono text-xs text-slate-500 min-h-[16px]" aria-live="polite"></p>
+
+      <!-- VYRONIX Labs Branding -->
+      <div
+        class="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-center gap-2 text-sm md:text-base text-slate-400 font-mono uppercase tracking-wider">
+        <span>Powered by</span>
+        <a href="#" target="_blank"
+          class="text-blue-500 font-black text-lg md:text-xl hover:text-blue-400 transition-colors tracking-widest">Swastik
+          & Suvajit</a>
+      </div>
+    </form>
+  </main>
+
+  <!-- Page Footer Branding -->
+  <footer
+    class="absolute bottom-4 left-0 right-0 text-center text-[11px] md:text-xs text-slate-400 font-mono uppercase tracking-wider pointer-events-none z-10">
+    Developed Under <a href="https://vyronix-labsdevs.vercel.app/" target="_blank"
+      class="text-blue-500 font-black text-xs md:text-sm hover:text-blue-400 pointer-events-auto transition-colors tracking-widest">VYRONIX
+      Labs</a> &copy; 2026
+  </footer>
+
+  <!-- TRANSMITTING LOADER OVERLAY -->
+  <div id="loaderOverlay"
+    class="fixed inset-0 bg-slate-950/85 backdrop-blur-md hidden items-center justify-center z-[200] opacity-0 transition-opacity duration-300">
+    <div
+      class="text-center flex flex-col items-center max-w-sm w-11/12 p-8 rounded-3xl bg-slate-900 border border-slate-800/80 shadow-2xl">
+      <div class="relative w-36 h-36 mb-6 flex items-center justify-center">
+        <!-- Logo Image (Bigger) -->
+        <img src="depaul-school-logo.png" alt="De Paul School Logo" class="w-28 h-28 object-contain animate-pulse" />
+        <!-- Scan ring around logo -->
+        <div class="absolute inset-0 border-2 border-dashed border-blue-500/40 rounded-full animate-spin"></div>
+      </div>
+      <h3 class="font-display font-bold text-lg text-white tracking-wider uppercase">TRANSMITTING DATA</h3>
+      <p class="loader-status font-mono text-xs text-slate-400 mt-1 tracking-wider uppercase">Establishing connection...
+      </p>
+      <div class="w-full h-1 bg-slate-800 rounded-full overflow-hidden mt-6">
+        <div id="progressBarFill"
+          class="w-0 h-full bg-gradient-to-r from-blue-600 to-sky-400 rounded-full transition-all duration-[1300ms] ease-out">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUCCESS MODAL OVERLAY -->
+  <div id="modalOverlay"
+    class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center p-4 z-[100]">
+    <div class="max-w-md w-full bg-slate-900 border border-slate-800 rounded-3xl p-6 md:p-8 text-center shadow-2xl">
+      <h2 id="modalTitle" class="font-display font-bold text-2xl text-emerald-400 uppercase tracking-wide">Feedback
+        Transmitted</h2>
+
+      <!-- SUBMITTED FEEDBACK SUMMARY CARD -->
+      <div
+        class="my-4 p-4 bg-slate-950/60 border border-slate-800/80 rounded-2xl text-left space-y-2 text-xs md:text-sm font-sans">
+        <p class="text-slate-500 font-bold uppercase tracking-wider text-[10px] md:text-xs">Your Feedback Submission:
+        </p>
+        <div class="h-px bg-slate-800/50 my-1"></div>
+        <p class="text-slate-300"><span class="text-slate-400 font-bold">NAME:</span> <span id="summaryName"
+            class="text-white font-medium uppercase font-sans"></span></p>
+        <p class="text-slate-300"><span class="text-slate-400 font-bold">RATING:</span> <span id="summaryRating"
+            class="text-blue-400 font-mono font-bold"></span><span class="text-slate-600 font-mono">/10</span></p>
+        <p class="text-slate-300"><span class="text-slate-400 font-bold">REMARKS:</span> <span id="summaryRemarks"
+            class="text-slate-200 italic font-sans normal-case"></span></p>
+      </div>
+
+      <!-- RANDOM EDUCATIONAL FACT CARD -->
+      <div class="my-4 p-4 bg-blue-950/40 border border-blue-800/40 rounded-2xl text-left space-y-1 font-sans">
+        <span class="text-blue-400 font-bold uppercase tracking-wider text-[10px] md:text-xs">💡 Did You Know?</span>
+        <p id="summaryFact" class="text-slate-200 text-xs md:text-sm italic font-sans normal-case"></p>
+      </div>
+
+      <p id="modalMessage" class="text-slate-300 mt-2 text-sm leading-relaxed">Thank you. Your response has been
+        successfully logged.</p>
+      <div class="h-px bg-slate-800 my-4"></div>
+      <p class="font-cursive text-slate-300 text-3xl tracking-normal normal-case">Explore Vyronix Labs initiatives?</p>
+      <div class="flex gap-3 mt-4">
+        <button id="modalYes"
+          class="flex-1 bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 px-4 rounded-xl text-xs uppercase tracking-wider transition-all duration-150 active:scale-95">Yes,
+          take me there</button>
+        <button id="modalNo"
+          class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold py-3 px-4 rounded-xl text-xs uppercase tracking-wider transition-all duration-150 active:scale-95">No,
+          close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- EMOJI CELEBRATION OVERLAY -->
+  <div id="emojiOverlay" class="fixed inset-0 bg-slate-950/90 backdrop-blur-md hidden items-center justify-center p-4 z-[150] opacity-0 transition-opacity duration-300">
+    <div class="max-w-sm w-full bg-slate-900 border border-slate-800 rounded-3xl p-8 text-center shadow-2xl flex flex-col items-center justify-center space-y-4">
+      <div class="text-7xl animate-bounce">😊</div>
+      <h2 class="font-display font-bold text-2xl text-blue-400 uppercase tracking-wider">Submitted Successfully!</h2>
+      <p class="text-slate-400 font-mono text-xs uppercase tracking-wider">Thank you for your valuable feedback! 😄</p>
+    </div>
+  </div>
+
+  <script>
+    // Configuration
+    const CONFIG = {
+      GOOGLE_SHEETS_WEB_APP_URL: "https://script.google.com/macros/s/AKfycbxR4bvTpnEMdgDucVOGERCC-Oh6Y-fb_16I1XiLng5cjCnc8GQxeks13c9tT2OGY7P7Kw/exec",
+      VYRONIX_LABS_URL: "https://vyronix-labsdevs.vercel.app/"
+    };
+
+    // DOM Elements
+    const slider = document.getElementById('ratingSlider');
+    const ratingBtns = document.querySelectorAll('.rating-btn');
+    const loaderOverlay = document.getElementById('loaderOverlay');
+    const progressBarFill = document.getElementById('progressBarFill');
+    const loaderStatus = document.querySelector('.loader-status');
+    const form = document.getElementById('feedbackForm');
+    const transmitBtn = document.getElementById('transmitBtn');
+    const formStatus = document.getElementById('formStatus');
+    const modalOverlay = document.getElementById('modalOverlay');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalMessage = document.getElementById('modalMessage');
+    const modalYes = document.getElementById('modalYes');
+    const modalNo = document.getElementById('modalNo');
+
+    // Dynamic Ambient Light Feature (Cursor Follow)
+    const cursorGlow = document.getElementById('cursorGlow');
+    if (cursorGlow) {
+      document.addEventListener('mousemove', (e) => {
+        cursorGlow.style.left = e.clientX + 'px';
+        cursorGlow.style.top = e.clientY + 'px';
+        cursorGlow.style.opacity = '1';
+      });
+      document.addEventListener('mouseleave', () => {
+        cursorGlow.style.opacity = '0';
+      });
+    }
+
+
+
+    // DYNAMIC FLOATING SCHOOL EXHIBITION ITEMS
+    const svgTemplates = [
+      // Book
+      `<svg class="w-10 h-10 md:w-12 md:h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" /></svg>`,
+      // Pencil
+      `<svg class="w-8 h-8 md:w-10 md:h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" /></svg>`,
+      // Graduation Cap
+      `<svg class="w-12 h-12 md:w-14 md:h-14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.263 15.918a9 9 0 003.298 3.298m8.824-3.298a9 9 0 01-3.298 3.298m0 0A8.969 8.969 0 0112 19.5c-1.35 0-2.6-.3-3.72-.843m7.44 0a8.969 8.969 0 00-3.72-.843m-7.44 0C5.529 16.811 4.5 15.03 4.5 13c0-2.474 1.583-4.57 3.75-5.323m7.44 0C17.917 8.43 19.5 10.526 19.5 13c0 2.03-1.029 3.811-2.58 4.843m-12.67-9.12a8.969 8.969 0 013.72-.843m7.44 0a8.969 8.969 0 00-3.72-.843m-7.44 0C8.5 7.5 12 4.5 12 4.5s3.5 3 4.5 4" /></svg>`,
+      // Science Flask
+      `<svg class="w-10 h-10 md:w-12 md:h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 21a3 3 0 003-3v-4.5a3 3 0 00-3-3h-1.5V9a3 3 0 00-3-3h-3a3 3 0 00-3 3v1.5H7.5A3 3 0 004.5 13.5V18a3 3 0 003 3h12zM7.5 12h9M12 6v6" /></svg>`,
+      // Set Square (Trigonometry Set triangle)
+      `<svg class="w-10 h-10 md:w-12 md:h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v16h16L4 4zm4 6v6h6L8 10z" /></svg>`,
+      // Ruler (Scale)
+      `<svg class="w-12 h-6 md:w-14 md:h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="10" rx="1.5" stroke="currentColor" stroke-width="1.5" /><path stroke-linecap="round" d="M6 7v3m4-3v3m4-3v3m4-3v3M4 7v5m16-5v5" /></svg>`,
+      // Compass (Drawing tool)
+      `<svg class="w-10 h-10 md:w-12 md:h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v3m-3 9l3-9 3 9m-4.5 3h3m-7.5 3a3 3 0 003-3v-1M19 18a3 3 0 01-3-3v-1" /></svg>`,
+      // Protractor
+      `<svg class="w-12 h-8 md:w-14 md:h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M20 12a8 8 0 00-16 0h16z M12 12V8m-4 4l1.5-2.5m6.5 2.5L14.5 9.5" /></svg>`,
+      // Lightbulb (Invention / Ideas)
+      `<svg class="w-10 h-10 md:w-12 md:h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18v1m0-11c-2.76 0-5 2.24-5 5a5 5 0 002.5 4.3v1.7a1.5 1.5 0 001.5 1.5h2a1.5 1.5 0 001.5-1.5v-1.7a5 5 0 002.5-4.3c0-2.76-2.24-5-5-5z" /></svg>`,
+      // Pi Symbol (Math)
+      `<svg class="w-10 h-10 md:w-12 md:h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 6h14M7 6v12c0 1 2 2 2 2m6-14v10c0 1-.5 2-1.5 2S12 19 12 18" /></svg>`,
+      // Science Atom Orbit
+      `<svg class="w-10 h-10 md:w-12 md:h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><ellipse cx="12" cy="12" rx="3" ry="9" transform="rotate(30 12 12)" stroke="currentColor" stroke-width="1.5" /><ellipse cx="12" cy="12" rx="3" ry="9" transform="rotate(-30 12 12)" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" /><circle cx="12" cy="12" r="1.5" fill="currentColor" /></svg>`
+    ];
+
+    function spawnFloatingItems(containerId, cols, rows) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          // Calculate grid cell center percentage
+          const baseLeft = (c + 0.5) * (100 / cols);
+          const baseTop = (r + 0.5) * (100 / rows);
+
+          // Add jitter offset (up to 70% of cell width/height)
+          const jitterX = (Math.random() - 0.5) * (70 / cols);
+          const jitterY = (Math.random() - 0.5) * (70 / rows);
+
+          const leftVal = Math.max(3, Math.min(97, baseLeft + jitterX));
+          const topVal = Math.max(3, Math.min(97, baseTop + jitterY));
+
+          const item = document.createElement('div');
+          const animIndex = ((r * cols + c) % 3) + 1;
+          item.className = `floating-item float-slow-${animIndex}`;
+          item.style.left = leftVal + '%';
+          item.style.top = topVal + '%';
+          item.style.animationDelay = Math.random() * 6 + 's';
+
+          // Increased opacity range (0.24 - 0.38) for better visibility
+          item.style.opacity = (0.24 + Math.random() * 0.14).toFixed(2);
+
+          // Set inner HTML first, then scale the child SVG to keep animations smooth
+          item.innerHTML = svgTemplates[Math.floor(Math.random() * svgTemplates.length)];
+
+          const scale = (0.85 + Math.random() * 0.3).toFixed(2);
+          const innerSvg = item.querySelector('svg');
+          if (innerSvg) {
+            innerSvg.style.transform = `scale(${scale})`;
+            innerSvg.style.transformOrigin = 'center';
+          }
+
+          container.appendChild(item);
+        }
+      }
+    }
+
+    // Spawn elements using a distributed grid to ensure spacing and prevent clustering
+    spawnFloatingItems('preloaderItemsContainer', 6, 5); // 30 elements
+    spawnFloatingItems('bodyItemsContainer', 10, 8);      // 80 elements
+
+    // PRELOADER LOGIC (6 seconds)
+    window.addEventListener('load', () => {
+      const preloader = document.getElementById('preloaderOverlay');
+      const preloaderFill = document.getElementById('preloaderBarFill');
+
+      // Animate progress bar fill steadily over 5.5s
+      preloaderFill.style.width = '100%';
+
+      // Dismiss after 6 seconds
+      setTimeout(() => {
+        preloader.classList.add('opacity-0', 'pointer-events-none');
+        setTimeout(() => {
+          preloader.style.display = 'none';
+        }, 500);
+      }, 6000);
+    });
+
+    // Mood Range Class Helper
+    function moodClass(rating) {
+      if (rating >= 7) return 'high';
+      if (rating <= 4) return 'low';
+      return 'mid';
+    }
+
+    // Update Rating active button state
+    function updateReadout(rating) {
+      const r = Number(rating);
+      const mood = moodClass(r);
+
+      ratingBtns.forEach(btn => {
+        const val = Number(btn.getAttribute('data-value'));
+
+        // Reset styles first
+        btn.className = 'rating-btn h-12 rounded-xl font-mono text-sm font-semibold transition-all active:scale-95 flex items-center justify-center ';
+
+        if (val === r) {
+          if (mood === 'low') {
+            btn.classList.add('bg-red-500/20', 'text-red-400', 'border-red-500/80', 'shadow-[0_0_15px_rgba(239,68,68,0.3)]', 'border-2');
+          } else if (mood === 'mid') {
+            btn.classList.add('bg-amber-500/20', 'text-amber-400', 'border-amber-500/80', 'shadow-[0_0_15px_rgba(245,158,11,0.3)]', 'border-2');
+          } else {
+            btn.classList.add('bg-emerald-500/20', 'text-emerald-400', 'border-emerald-500/80', 'shadow-[0_0_15px_rgba(16,185,129,0.3)]', 'border-2');
+          }
+        } else {
+          btn.classList.add('bg-slate-950/80', 'hover:bg-slate-800', 'border-slate-800', 'text-slate-400', 'hover:text-white', 'border');
+        }
+      });
+    }
+
+    // Attach click events on rating buttons
+    ratingBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const val = btn.getAttribute('data-value');
+        slider.value = val;
+        updateReadout(val);
+      });
+    });
+    // Educational facts database
+    const EDUCATIONAL_FACTS = [
+      "Writing down notes by hand improves long-term memory retention and understanding compared to typing.",
+      "Students who read for pleasure just 20 minutes a day are exposed to 1.8 million words in a single year.",
+      "Taking regular, brief breaks during study sessions helps maintain focus, comprehension, and productivity.",
+      "Music education improves language processing, memory retention, and spatial-temporal math skills.",
+      "Explaining a difficult concept to someone else is one of the most effective ways to master the topic yourself.",
+      "Physical activity stimulates both hemispheres of the brain, boosting academic focus and stamina."
+    ];
+
+    // Check if there is an existing submission on page load/reload
+    function checkExistingSubmission() {
+      const submitted = localStorage.getItem('feedbackSubmitted');
+
+      if (submitted === 'true') {
+        const summaryName = localStorage.getItem('submittedName') || 'N/A';
+        const summaryRating = localStorage.getItem('submittedRating') || '5';
+        const summaryRemarks = localStorage.getItem('submittedRemarks') || 'None';
+        const summaryFact = localStorage.getItem('submittedFact') || "Continuous learning builds active minds!";
+
+        // Hide form
+        form.classList.add('hidden');
+
+        // Check if thankYouContainer already exists
+        let thankYouContainer = document.getElementById('thankYouContainer');
+        if (!thankYouContainer) {
+          thankYouContainer = document.createElement('div');
+          thankYouContainer.id = 'thankYouContainer';
+          thankYouContainer.className = 'space-y-6 text-center mt-6';
+          thankYouContainer.innerHTML = `
+            <div class="p-6 bg-slate-950/80 border border-slate-800 rounded-3xl text-left space-y-4 font-sans">
+              <h3 class="text-blue-400 font-display font-bold text-lg uppercase tracking-wide">Your Submitted Feedback</h3>
+              <div class="h-px bg-slate-800/80"></div>
+              <div class="space-y-2 text-sm font-sans">
+                <p class="text-slate-300"><span class="text-slate-500 font-bold uppercase">Name:</span> <span class="text-white font-medium uppercase font-sans">${summaryName}</span></p>
+                <p class="text-slate-300"><span class="text-slate-500 font-bold uppercase">Rating:</span> <span class="text-blue-400 font-mono font-bold">${summaryRating}/10</span></p>
+                <p class="text-slate-300"><span class="text-slate-500 font-bold uppercase">Remarks:</span> <span class="text-slate-200 italic font-sans normal-case">${summaryRemarks}</span></p>
+              </div>
+              <div class="h-px bg-slate-800/50 my-2"></div>
+              <div class="space-y-1 font-sans">
+                <span class="text-blue-400 font-bold uppercase tracking-wider text-[10px] md:text-xs">💡 Did You Know?</span>
+                <p class="text-slate-200 text-xs italic font-sans normal-case">${summaryFact}</p>
+              </div>
+            </div>
+            <p class="text-slate-400 text-xs tracking-wider uppercase font-mono">Your response has been securely transmitted.</p>
+            <div class="flex flex-col gap-3">
+              <button id="btnNewFeedback" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold py-3.5 rounded-2xl text-xs uppercase tracking-wider transition-all duration-150 active:scale-95 border border-slate-700/50">
+                Submit New Feedback
+              </button>
+              <a href="projects.html" class="w-full block bg-blue-600 hover:bg-blue-500 text-white font-bold py-3.5 rounded-2xl text-xs uppercase tracking-wider transition-all duration-150 active:scale-95 shadow-lg shadow-blue-600/20 text-center">
+                Explore Vyronix Labs
+              </a>
+            </div>
+          `;
+          form.parentNode.appendChild(thankYouContainer);
+
+          document.getElementById('btnNewFeedback').addEventListener('click', () => {
+            localStorage.removeItem('feedbackSubmitted');
+            localStorage.removeItem('declinedVyronix');
+            localStorage.removeItem('submittedName');
+            localStorage.removeItem('submittedRating');
+            localStorage.removeItem('submittedRemarks');
+            localStorage.removeItem('submittedFact');
+            thankYouContainer.remove();
+            form.classList.remove('hidden');
+            form.reset();
+            slider.value = 5;
+            updateReadout(5);
+            formStatus.textContent = '';
+          });
+        }
+      }
+    }
+
+    // Set initial rating representation (5)
+    updateReadout(slider.value);
+
+    // Check submission status on load
+    checkExistingSubmission();
+
+    // Google Sheets integration
+    function sendToGoogleSheets(payload) {
+      if (!CONFIG.GOOGLE_SHEETS_WEB_APP_URL || CONFIG.GOOGLE_SHEETS_WEB_APP_URL.indexOf('PASTE_YOUR') === 0) {
+        console.warn('Vyronix Labs console: Google Sheets URL not configured.');
+        return Promise.resolve();
+      }
+      return fetch(CONFIG.GOOGLE_SHEETS_WEB_APP_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+      }).catch(err => console.error('Vyronix Labs: upload failed', err));
+    }
+
+    // Loader display cycle
+    function showLoader(callback) {
+      loaderOverlay.style.display = 'flex';
+      // Reflow
+      loaderOverlay.offsetHeight;
+      loaderOverlay.classList.remove('opacity-0');
+      loaderOverlay.classList.add('opacity-100');
+
+      progressBarFill.style.width = '0%';
+      setTimeout(() => {
+        progressBarFill.style.width = '100%';
+      }, 50);
+
+      loaderStatus.textContent = 'ESTABLISHING SECURE LINK...';
+      setTimeout(() => {
+        loaderStatus.textContent = 'TRANSMITTING FEEDBACK DATA...';
+      }, 450);
+      setTimeout(() => {
+        loaderStatus.textContent = 'SECURE UPLOAD COMPLETE!';
+      }, 950);
+
+      setTimeout(() => {
+        loaderOverlay.classList.remove('opacity-100');
+        loaderOverlay.classList.add('opacity-0');
+        setTimeout(() => {
+          loaderOverlay.style.display = 'none';
+          callback();
+        }, 300);
+      }, 1300);
+    }
+
+    // Open transmitted response Modal popup
+    function openModal(name, rating, remarks, fact) {
+      const mood = moodClass(rating);
+      if (mood === 'high') {
+        modalTitle.textContent = 'FEEDBACK TRANSMITTED';
+        modalTitle.className = 'font-display font-bold text-2xl text-emerald-400 uppercase tracking-wide';
+        modalMessage.textContent = 'Great to hear! Your response has been logged successfully.';
+      } else if (mood === 'low') {
+        modalTitle.textContent = 'FEEDBACK TRANSMITTED';
+        modalTitle.className = 'font-display font-bold text-2xl text-blue-400 uppercase tracking-wide';
+        modalMessage.textContent = 'Thank you for the honesty. This has been logged so we can improve.';
+      } else {
+        modalTitle.textContent = 'FEEDBACK TRANSMITTED';
+        modalTitle.className = 'font-display font-bold text-2xl text-amber-400 uppercase tracking-wide';
+        modalMessage.textContent = 'Thank you. Your response has been logged successfully.';
+      }
+
+      // Update modal summary card content
+      document.getElementById('summaryName').textContent = name;
+      document.getElementById('summaryRating').textContent = rating;
+      document.getElementById('summaryRemarks').textContent = remarks || 'NONE';
+      document.getElementById('summaryFact').textContent = fact || "Continuous learning builds active minds!";
+
+      modalOverlay.style.display = 'flex';
+    }
+
+    function closeModal() {
+      modalOverlay.style.display = 'none';
+    }
+
+    // Handle form submit
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById('studentName').value.trim();
+      const rating = Number(slider.value);
+      const remarks = document.getElementById('remarks').value.trim();
+
+      if (!name) {
+        formStatus.textContent = 'Please enter a name before transmitting.';
+        return;
+      }
+
+      transmitBtn.disabled = true;
+      formStatus.textContent = 'Transmitting...';
+
+      sendToGoogleSheets({ name, rating, remarks });
+
+      showLoader(() => {
+        transmitBtn.disabled = false;
+        formStatus.textContent = 'Feedback transmitted.';
+
+        // Select a random fact to present to the user
+        const randomFact = EDUCATIONAL_FACTS[Math.floor(Math.random() * EDUCATIONAL_FACTS.length)];
+
+        // Save details to localStorage immediately on transmission success
+        localStorage.setItem('feedbackSubmitted', 'true');
+        localStorage.setItem('submittedName', name);
+        localStorage.setItem('submittedRating', rating);
+        localStorage.setItem('submittedRemarks', remarks || 'None');
+        localStorage.setItem('submittedFact', randomFact);
+
+        // Show Emoji Celebration Overlay first
+        const emojiOverlay = document.getElementById('emojiOverlay');
+        emojiOverlay.style.display = 'flex';
+        // Force reflow
+        emojiOverlay.offsetHeight;
+        emojiOverlay.classList.remove('opacity-0');
+        emojiOverlay.classList.add('opacity-100');
+
+        // Close after 1.5 seconds and proceed to feedback modal details
+        setTimeout(() => {
+          emojiOverlay.classList.remove('opacity-100');
+          emojiOverlay.classList.add('opacity-0');
+          setTimeout(() => {
+            emojiOverlay.style.display = 'none';
+            openModal(name, rating, remarks, randomFact);
+          }, 300);
+        }, 1500);
+      });
+    });
+
+    // Modal click redirect to external URL
+    modalYes.addEventListener('click', () => {
+      window.location.href = 'projects.html';
+    });
+
+    // Modal cancel button resets the page form and reloads the page
+    modalNo.addEventListener('click', () => {
+      closeModal();
+      localStorage.removeItem('feedbackSubmitted');
+      localStorage.removeItem('declinedVyronix');
+      localStorage.removeItem('submittedName');
+      localStorage.removeItem('submittedRating');
+      localStorage.removeItem('submittedRemarks');
+      localStorage.removeItem('submittedFact');
+      window.location.reload();
+    });
+  </script>
+</body>
+
+</html>
