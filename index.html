@@ -27,65 +27,6 @@
     }
   </script>
   <style>
-    /* Floating School Exhibition Items */
-    .floating-item {
-      position: absolute;
-      pointer-events: none;
-      z-index: 0;
-      /* Keep behind main console card to prevent overlays */
-      color: rgba(59, 130, 246, 0.55);
-      /* Electric Blue */
-      filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.15));
-      will-change: transform, opacity;
-    }
-
-    .float-slow-1 {
-      animation: float1 7s infinite ease-in-out;
-    }
-
-    .float-slow-2 {
-      animation: float2 9s infinite ease-in-out;
-    }
-
-    .float-slow-3 {
-      animation: float3 8s infinite ease-in-out;
-    }
-
-    @keyframes float1 {
-
-      0%,
-      100% {
-        transform: translate3d(0, 0, 0) rotate(0deg);
-      }
-
-      50% {
-        transform: translate3d(10px, -20px, 0) rotate(15deg);
-      }
-    }
-
-    @keyframes float2 {
-
-      0%,
-      100% {
-        transform: translate3d(0, 0, 0) rotate(0deg);
-      }
-
-      50% {
-        transform: translate3d(-15px, -15px, 0) rotate(-20deg);
-      }
-    }
-
-    @keyframes float3 {
-
-      0%,
-      100% {
-        transform: translate3d(0, 0, 0) rotate(0deg);
-      }
-
-      50% {
-        transform: translate3d(5px, -25px, 0) rotate(10deg);
-      }
-    }
 
     /* Scrolling Marquee Ribbon */
     @keyframes marquee {
@@ -122,8 +63,7 @@
 
 
 
-  <!-- Main Page Floating Exhibition Elements (Subtle Background) -->
-  <div id="bodyItemsContainer" class="absolute inset-0 pointer-events-none z-0 overflow-hidden"></div>
+
 
   <!-- Rolling Ribbon Background (Top Banner) -->
   <div
@@ -139,8 +79,7 @@
   <div id="preloaderOverlay"
     class="fixed inset-0 bg-slate-950 flex flex-col items-center justify-center z-[999] transition-all duration-500 overflow-hidden">
 
-    <!-- Preloader Floating Exhibition Elements Container -->
-    <div id="preloaderItemsContainer" class="absolute inset-0 pointer-events-none z-0"></div>
+
 
     <div
       class="text-center flex flex-col items-center max-w-md w-11/12 p-8 rounded-3xl bg-slate-900/60 backdrop-blur-xl border border-slate-800/80 shadow-2xl relative z-10">
@@ -378,79 +317,6 @@
     }
 
 
-
-    // DYNAMIC FLOATING SCHOOL EXHIBITION ITEMS
-    const svgTemplates = [
-      // Book
-      `<svg class="w-10 h-10 md:w-12 md:h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" /></svg>`,
-      // Pencil
-      `<svg class="w-8 h-8 md:w-10 md:h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" /></svg>`,
-      // Graduation Cap
-      `<svg class="w-12 h-12 md:w-14 md:h-14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.263 15.918a9 9 0 003.298 3.298m8.824-3.298a9 9 0 01-3.298 3.298m0 0A8.969 8.969 0 0112 19.5c-1.35 0-2.6-.3-3.72-.843m7.44 0a8.969 8.969 0 00-3.72-.843m-7.44 0C5.529 16.811 4.5 15.03 4.5 13c0-2.474 1.583-4.57 3.75-5.323m7.44 0C17.917 8.43 19.5 10.526 19.5 13c0 2.03-1.029 3.811-2.58 4.843m-12.67-9.12a8.969 8.969 0 013.72-.843m7.44 0a8.969 8.969 0 00-3.72-.843m-7.44 0C8.5 7.5 12 4.5 12 4.5s3.5 3 4.5 4" /></svg>`,
-      // Science Flask
-      `<svg class="w-10 h-10 md:w-12 md:h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 21a3 3 0 003-3v-4.5a3 3 0 00-3-3h-1.5V9a3 3 0 00-3-3h-3a3 3 0 00-3 3v1.5H7.5A3 3 0 004.5 13.5V18a3 3 0 003 3h12zM7.5 12h9M12 6v6" /></svg>`,
-      // Set Square (Trigonometry Set triangle)
-      `<svg class="w-10 h-10 md:w-12 md:h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v16h16L4 4zm4 6v6h6L8 10z" /></svg>`,
-      // Ruler (Scale)
-      `<svg class="w-12 h-6 md:w-14 md:h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="10" rx="1.5" stroke="currentColor" stroke-width="1.5" /><path stroke-linecap="round" d="M6 7v3m4-3v3m4-3v3m4-3v3M4 7v5m16-5v5" /></svg>`,
-      // Compass (Drawing tool)
-      `<svg class="w-10 h-10 md:w-12 md:h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v3m-3 9l3-9 3 9m-4.5 3h3m-7.5 3a3 3 0 003-3v-1M19 18a3 3 0 01-3-3v-1" /></svg>`,
-      // Protractor
-      `<svg class="w-12 h-8 md:w-14 md:h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M20 12a8 8 0 00-16 0h16z M12 12V8m-4 4l1.5-2.5m6.5 2.5L14.5 9.5" /></svg>`,
-      // Lightbulb (Invention / Ideas)
-      `<svg class="w-10 h-10 md:w-12 md:h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18v1m0-11c-2.76 0-5 2.24-5 5a5 5 0 002.5 4.3v1.7a1.5 1.5 0 001.5 1.5h2a1.5 1.5 0 001.5-1.5v-1.7a5 5 0 002.5-4.3c0-2.76-2.24-5-5-5z" /></svg>`,
-      // Pi Symbol (Math)
-      `<svg class="w-10 h-10 md:w-12 md:h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 6h14M7 6v12c0 1 2 2 2 2m6-14v10c0 1-.5 2-1.5 2S12 19 12 18" /></svg>`,
-      // Science Atom Orbit
-      `<svg class="w-10 h-10 md:w-12 md:h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><ellipse cx="12" cy="12" rx="3" ry="9" transform="rotate(30 12 12)" stroke="currentColor" stroke-width="1.5" /><ellipse cx="12" cy="12" rx="3" ry="9" transform="rotate(-30 12 12)" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" /><circle cx="12" cy="12" r="1.5" fill="currentColor" /></svg>`
-    ];
-
-    function spawnFloatingItems(containerId, cols, rows) {
-      const container = document.getElementById(containerId);
-      if (!container) return;
-
-      for (let r = 0; r < rows; r++) {
-        for (let c = 0; c < cols; c++) {
-          // Calculate grid cell center percentage
-          const baseLeft = (c + 0.5) * (100 / cols);
-          const baseTop = (r + 0.5) * (100 / rows);
-
-          // Add jitter offset (up to 70% of cell width/height)
-          const jitterX = (Math.random() - 0.5) * (70 / cols);
-          const jitterY = (Math.random() - 0.5) * (70 / rows);
-
-          const leftVal = Math.max(3, Math.min(97, baseLeft + jitterX));
-          const topVal = Math.max(3, Math.min(97, baseTop + jitterY));
-
-          const item = document.createElement('div');
-          const animIndex = ((r * cols + c) % 3) + 1;
-          item.className = `floating-item float-slow-${animIndex}`;
-          item.style.left = leftVal + '%';
-          item.style.top = topVal + '%';
-          item.style.animationDelay = Math.random() * 6 + 's';
-
-          // Increased opacity range (0.24 - 0.38) for better visibility
-          item.style.opacity = (0.24 + Math.random() * 0.14).toFixed(2);
-
-          // Set inner HTML first, then scale the child SVG to keep animations smooth
-          item.innerHTML = svgTemplates[Math.floor(Math.random() * svgTemplates.length)];
-
-          const scale = (0.85 + Math.random() * 0.3).toFixed(2);
-          const innerSvg = item.querySelector('svg');
-          if (innerSvg) {
-            innerSvg.style.transform = `scale(${scale})`;
-            innerSvg.style.transformOrigin = 'center';
-          }
-
-          container.appendChild(item);
-        }
-      }
-    }
-
-    // Spawn elements using a distributed grid to ensure spacing and prevent clustering
-    spawnFloatingItems('preloaderItemsContainer', 6, 5); // 30 elements
-    spawnFloatingItems('bodyItemsContainer', 10, 8);      // 80 elements
-
     // PRELOADER LOGIC (6 seconds)
     window.addEventListener('load', () => {
       const preloader = document.getElementById('preloaderOverlay');
@@ -510,12 +376,24 @@
     });
     // Educational facts database
     const EDUCATIONAL_FACTS = [
-      "Writing down notes by hand improves long-term memory retention and understanding compared to typing.",
-      "Students who read for pleasure just 20 minutes a day are exposed to 1.8 million words in a single year.",
-      "Taking regular, brief breaks during study sessions helps maintain focus, comprehension, and productivity.",
-      "Music education improves language processing, memory retention, and spatial-temporal math skills.",
-      "Explaining a difficult concept to someone else is one of the most effective ways to master the topic yourself.",
-      "Physical activity stimulates both hemispheres of the brain, boosting academic focus and stamina."
+      "Writing notes by hand engages motor skills and improves long-term memory retention more than typing.",
+      "Reading for pleasure just 20 minutes a day exposes a student to over 1.8 million words per year.",
+      "Taking structured 5-minute breaks every 25 minutes (the Pomodoro technique) preserves high concentration.",
+      "Learning a musical instrument improves language comprehension, auditory memory, and mathematics skills.",
+      "Teaching or explaining a newly learned concept to someone else boosts your own retention to about 90%.",
+      "Light exercise or stretching before studying stimulates brain activity and improves mental performance.",
+      "Getting 8 hours of sleep after learning helps your brain process, organize, and consolidate new memories.",
+      "A student's brain consumes nearly 20% of the body's daily energy supply, even though it is only 2% of body weight.",
+      "Drinking adequate water during study sessions has been shown to boost short-term cognitive performance by 14%.",
+      "The word 'school' comes from the ancient Greek word 'schole', which originally meant 'free time' or 'leisure'.",
+      "Doodling or sketching in the margins of notebooks can actually help improve concentration during long lectures.",
+      "Studying in different rooms or locations improves the brain's ability to recall information in different contexts.",
+      "Our brain remembers visual information (like charts and diagrams) up to six times better than plain text information.",
+      "Testing yourself with quizzes is significantly more effective for learning than re-reading notes or textbooks.",
+      "The human attention span naturally resets every 90 minutes, matching the body's natural ultradian rhythm.",
+      "Practicing spacing out study sessions over days or weeks (spaced repetition) yields twice the retention of cramming.",
+      "The left hemisphere of the brain controls logic and math, while the right hemisphere is key for visual arts and spatial recognition.",
+      "Asking questions active-recalls material, forming stronger synaptic connections in the cerebral cortex."
     ];
 
     // Check if there is an existing submission on page load/reload
