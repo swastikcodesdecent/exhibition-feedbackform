@@ -120,7 +120,7 @@
 
     <form id="feedbackForm" class="space-y-6">
       <!-- Hidden Input for Rating -->
-      <input type="hidden" id="ratingSlider" value="5" />
+      <input type="hidden" id="ratingSlider" value="" />
 
       <!-- Student Name Input -->
       <div class="space-y-2">
@@ -452,8 +452,8 @@
             thankYouContainer.remove();
             form.classList.remove('hidden');
             form.reset();
-            slider.value = 5;
-            updateReadout(5);
+            slider.value = '';
+            updateReadout('');
             formStatus.textContent = '';
           });
         }
@@ -546,13 +546,20 @@
       e.preventDefault();
 
       const name = document.getElementById('studentName').value.trim();
-      const rating = Number(slider.value);
+      const ratingVal = slider.value;
       const remarks = document.getElementById('remarks').value.trim();
 
       if (!name) {
         formStatus.textContent = 'Please enter a name before transmitting.';
         return;
       }
+
+      if (!ratingVal) {
+        formStatus.textContent = 'Please select a rating before transmitting.';
+        return;
+      }
+
+      const rating = Number(ratingVal);
 
       transmitBtn.disabled = true;
       formStatus.textContent = 'Transmitting...';
