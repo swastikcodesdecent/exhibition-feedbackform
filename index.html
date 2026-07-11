@@ -27,7 +27,6 @@
     }
   </script>
   <style>
-
     /* Scrolling Marquee Ribbon */
     @keyframes marquee {
       0% {
@@ -40,94 +39,370 @@
     }
 
     .animate-marquee {
-      animation: marquee 5s linear infinite;
+      animation: marquee 12s linear infinite;
+    }
+
+    /* Ambient glass backdrops */
+    @keyframes drift {
+      0% {
+        transform: translate(0, 0) scale(1);
+      }
+
+      50% {
+        transform: translate(60px, 40px) scale(1.1);
+      }
+
+      100% {
+        transform: translate(0, 0) scale(1);
+      }
+    }
+
+    @keyframes drift-reverse {
+      0% {
+        transform: translate(0, 0) scale(1.1);
+      }
+
+      50% {
+        transform: translate(-40px, 60px) scale(0.95);
+      }
+
+      100% {
+        transform: translate(0, 0) scale(1.1);
+      }
+    }
+
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(130px);
+      opacity: 0.58;
+      pointer-events: none;
+      z-index: 0;
+      mix-blend-mode: screen;
+    }
+
+    .orb-1 {
+      top: -10%;
+      left: -10%;
+      width: 50vw;
+      height: 50vw;
+      background: radial-gradient(circle, rgba(249, 115, 22, 0.7) 0%, rgba(249, 115, 22, 0) 75%);
+      animation: drift 25s infinite alternate ease-in-out;
+    }
+
+    .orb-2 {
+      bottom: -10%;
+      right: -10%;
+      width: 55vw;
+      height: 55vw;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0) 75%);
+      animation: drift-reverse 30s infinite alternate ease-in-out;
+    }
+
+    .orb-3 {
+      top: 30%;
+      right: 10%;
+      width: 35vw;
+      height: 35vw;
+      background: radial-gradient(circle, rgba(249, 115, 22, 0.45) 0%, rgba(249, 115, 22, 0) 75%);
+      animation: drift 22s infinite alternate-reverse ease-in-out;
+    }
+
+    /* Glassmorphism Styles */
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(25px) saturate(220%);
+      -webkit-backdrop-filter: blur(25px) saturate(220%);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-top: 1px solid rgba(255, 255, 255, 0.3);
+      border-left: 1px solid rgba(255, 255, 255, 0.22);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(35px) saturate(220%);
+      -webkit-backdrop-filter: blur(35px) saturate(220%);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-top: 1px solid rgba(255, 255, 255, 0.25);
+      border-left: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 32px 64px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    .glass-input {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      backdrop-filter: blur(10px);
+    }
+
+    .glass-input:focus {
+      background: rgba(255, 255, 255, 0.09);
+      border-color: rgba(249, 115, 22, 0.55);
+      border-bottom-color: rgba(249, 115, 22, 0.9);
+      box-shadow: 0 0 15px rgba(249, 115, 22, 0.2);
+    }
+
+    .glass-button-primary {
+      background: linear-gradient(135deg, rgba(249, 115, 22, 0.6) 0%, rgba(194, 65, 12, 0.7) 100%);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-top-color: rgba(255, 255, 255, 0.3);
+      border-left-color: rgba(255, 255, 255, 0.25);
+      color: #fff;
+      box-shadow: 0 8px 24px rgba(249, 115, 22, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .glass-button-primary:hover {
+      background: linear-gradient(135deg, rgba(249, 115, 22, 0.75) 0%, rgba(194, 65, 12, 0.85) 100%);
+      border-color: rgba(255, 255, 255, 0.25);
+      transform: translateY(-1px);
+      box-shadow: 0 12px 28px rgba(249, 115, 22, 0.45), 0 0 15px rgba(249, 115, 22, 0.3);
+    }
+
+    .glass-button-primary:active {
+      transform: translateY(0) scale(0.98);
+      box-shadow: 0 4px 12px rgba(249, 115, 22, 0.25);
+    }
+
+    .glass-button-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-top-color: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .glass-button-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.15);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .glass-button-secondary:active {
+      transform: translateY(0) scale(0.98);
+    }
+
+    @keyframes preloaderPulse {
+      0% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 15px rgba(249, 115, 22, 0.25));
+      }
+
+      50% {
+        transform: scale(1.04);
+        filter: drop-shadow(0 0 32px rgba(249, 115, 22, 0.55));
+      }
+
+      100% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 15px rgba(249, 115, 22, 0.25));
+      }
+    }
+
+    @keyframes ringGlow {
+      0% {
+        transform: scale(0.92);
+        opacity: 0.4;
+      }
+
+      50% {
+        transform: scale(1.08);
+        opacity: 0.8;
+      }
+
+      100% {
+        transform: scale(1.25);
+        opacity: 0;
+      }
+    }
+
+    @keyframes pulseDot {
+
+      0%,
+      100% {
+        transform: scale(0.75);
+        opacity: 0.25;
+        filter: drop-shadow(0 0 0 transparent);
+      }
+
+      50% {
+        transform: scale(1.3);
+        opacity: 1;
+        filter: drop-shadow(0 0 10px currentColor);
+      }
+    }
+
+    .dot-pulse {
+      animation: pulseDot 1.6s infinite ease-in-out;
+    }
+
+    #feedList::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    #feedList::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    #feedList::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 99px;
+    }
+
+    #feedList::-webkit-scrollbar-thumb:hover {
+      background: rgba(249, 115, 22, 0.35);
     }
   </style>
 </head>
 
 <body
-  class="bg-slate-950 text-slate-100 min-h-screen flex items-center justify-center font-sans antialiased p-4 relative overflow-x-hidden">
+  class="bg-[#0f1124] text-slate-100 min-h-screen flex items-center justify-center font-sans antialiased p-4 relative overflow-x-hidden">
 
-  <!-- Ambient Glow Effects -->
-  <div
-    class="fixed top-[-10%] left-[-10%] w-[50%] h-[50%] bg-blue-600/15 rounded-full blur-[120px] pointer-events-none z-0">
-  </div>
-  <div
-    class="fixed bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-white/5 rounded-full blur-[120px] pointer-events-none z-0">
-  </div>
+  <!-- Animated Background Orbs -->
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
   <!-- Dynamic Ambient Cursor Light -->
   <div id="cursorGlow"
-    class="fixed pointer-events-none -translate-x-1/2 -translate-y-1/2 rounded-full blur-[100px] opacity-0 transition-opacity duration-700 z-0 select-none"
-    style="width: 500px; height: 500px; background: radial-gradient(circle, rgba(59, 130, 246, 0.12) 0%, rgba(255, 255, 255, 0.03) 40%, rgba(59, 130, 246, 0) 70%);">
+    class="fixed pointer-events-none -translate-x-1/2 -translate-y-1/2 rounded-full blur-[110px] opacity-0 transition-opacity duration-700 z-0 select-none"
+    style="width: 500px; height: 500px; background: radial-gradient(circle, rgba(249, 115, 22, 0.14) 0%, rgba(255, 255, 255, 0.03) 45%, rgba(0, 0, 0, 0) 70%);">
   </div>
 
-
-
-
-
-  <!-- Rolling Ribbon Background (Top Banner) -->
-  <div
-    class="absolute top-0 left-0 right-0 overflow-hidden bg-gradient-to-r from-blue-600 via-sky-500 to-blue-600 py-3 z-10 select-none shadow-[0_4px_25px_rgba(59,130,246,0.15)] border-b border-blue-400/20 pointer-events-none">
-    <div
-      class="flex whitespace-nowrap animate-marquee text-white font-display text-xs md:text-sm tracking-[0.15em] font-extrabold uppercase">
-      <span class="inline-block pr-8">DE PAUL SCHOOL EXHIBITION 2026 &bull; POWERED BY Swastik & Suvajit &bull; DISCOVER INNOVATION &bull; FUTURE SYNTHESIS &bull; SHAPING THE WORLD &bull;</span>
-      <span class="inline-block pr-8" aria-hidden="true">DE PAUL SCHOOL EXHIBITION 2026 &bull; POWERED BY Swastik & Suvajit &bull; DISCOVER INNOVATION &bull; FUTURE SYNTHESIS &bull; SHAPING THE WORLD &bull;</span>
-    </div>
-  </div>
-
-  <!-- PRELOADER OVERLAY -->
+  <!-- Floating Ribbon (Dynamic Status Capsule) -->
+  <div id="floatingRibbon"
+    class="fixed top-4 left-1/2 -translate-x-1/2 w-[92%] max-w-xl overflow-hidden glass-panel py-3 px-6 rounded-full z-50 select-none pointer-events-none text-center shadow-[0_8px_32px_rgba(0,0,0,0.2)] flex items-center justify-center"
+    style="opacity: 1; transform: translate(-50%, 0); transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);">
+    <span id="ribbonText"
+      class="text-white font-display text-[10px] md:text-xs tracking-[0.25em] font-extrabold uppercase text-center w-full transition-opacity duration-300">
+      DE PAUL SCHOOL EXHIBITION 2026
+    </span>
+  </div> <!-- PRELOADER OVERLAY -->
   <div id="preloaderOverlay"
-    class="fixed inset-0 bg-slate-950 flex flex-col items-center justify-center z-[999] transition-all duration-500 overflow-hidden">
+    class="fixed inset-0 bg-[#0f1124] flex flex-col items-center justify-center z-[999] transition-all duration-500 overflow-hidden">
 
-
-
+    <!-- background ambient glows — same palette as main page orbs -->
     <div
-      class="text-center flex flex-col items-center max-w-md w-11/12 p-8 rounded-3xl bg-slate-900/60 backdrop-blur-xl border border-slate-800/80 shadow-2xl relative z-10">
-      <div class="relative w-48 h-48 mb-6 flex items-center justify-center">
-        <!-- Logo Image (Bigger) -->
+      class="absolute w-[520px] h-[520px] rounded-full blur-[130px] top-1/2 left-1/3 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+      style="background: radial-gradient(circle, rgba(249,115,22,0.55) 0%, rgba(249,115,22,0) 75%); mix-blend-mode: screen;">
+    </div>
+    <div
+      class="absolute w-[520px] h-[520px] rounded-full blur-[130px] top-1/2 left-2/3 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+      style="background: radial-gradient(circle, rgba(255,255,255,0.20) 0%, rgba(255,255,255,0) 75%); mix-blend-mode: screen;">
+    </div>
+
+    <div class="text-center flex flex-col items-center max-w-xl w-11/12 p-8 z-10 select-none">
+
+      <!-- School Logo -->
+      <div class="w-32 h-32 mb-6 flex items-center justify-center">
         <img src="depaul-school-logo.png" alt="De Paul School Logo"
-          class="w-40 h-40 object-contain animate-[preloaderPulse_1.8s_infinite_ease-in-out] relative z-10" />
-        <!-- Custom pulsing ring background -->
-        <div
-          class="absolute inset-2 border-2 border-blue-500/30 rounded-full animate-[ringGlow_1.8s_infinite_ease-out]">
-        </div>
+          class="w-28 h-28 object-contain animate-[preloaderPulse_1.8s_infinite_ease-in-out]" />
       </div>
-      <h2 class="font-display font-extrabold text-3xl md:text-4xl text-white tracking-wide uppercase">DE PAUL SCHOOL
+
+      <!-- Spaced Mini Header -->
+      <span class="text-[10px] md:text-xs text-orange-400/80 font-mono tracking-[0.35em] uppercase mb-4">&bull; DE PAUL
+        SCHOOL &bull; SYSTEM BOOT &bull;</span>
+
+      <!-- Glowing Neon Title -->
+      <h2
+        class="font-display font-extrabold text-5xl md:text-6xl text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-orange-300 to-white uppercase tracking-wider filter drop-shadow-[0_0_20px_rgba(249,115,22,0.45)]">
+        DE PAUL
       </h2>
-      <h3 class="font-cursive text-blue-400 mt-2 text-3xl font-medium tracking-normal normal-case">Exhibition</h3>
-      <div class="w-full h-1 bg-slate-800 rounded-full overflow-hidden mt-8">
-        <div id="preloaderBarFill"
-          class="w-0 h-full bg-gradient-to-r from-blue-600 to-sky-400 rounded-full transition-all duration-[2000ms] ease-out">
+
+      <!-- Cursive / Glowing Spaced Sub-Header -->
+      <h3 class="font-cursive text-orange-400 mt-3 text-4xl font-medium tracking-normal normal-case">Exhibition 2026
+      </h3>
+
+      <!-- Spaced Caption -->
+      <p class="text-[9px] md:text-xs text-slate-400 font-mono uppercase tracking-[0.2em] mt-4">BUILDING THE FUTURE
+        &bull; SHAPING THE WORLD</p>
+
+      <!-- Pulsing Color Dot Wave -->
+      <div class="flex items-center justify-center gap-3.5 my-8">
+        <div class="dot-pulse w-2.5 h-2.5 rounded-full bg-[#f97316]" style="animation-delay: 0.0s; color: #f97316;">
+        </div>
+        <div class="dot-pulse w-2.5 h-2.5 rounded-full bg-[#ffffff]" style="animation-delay: 0.1s; color: #ffffff;">
+        </div>
+        <div class="dot-pulse w-2.5 h-2.5 rounded-full bg-[#f97316]" style="animation-delay: 0.2s; color: #f97316;">
+        </div>
+        <div class="dot-pulse w-2.5 h-2.5 rounded-full bg-[#ffffff]" style="animation-delay: 0.3s; color: #ffffff;">
+        </div>
+        <div class="dot-pulse w-2.5 h-2.5 rounded-full bg-[#f97316]" style="animation-delay: 0.4s; color: #f97316;">
+        </div>
+        <div class="dot-pulse w-2.5 h-2.5 rounded-full bg-[#ffffff]" style="animation-delay: 0.5s; color: #ffffff;">
+        </div>
+        <div class="dot-pulse w-2.5 h-2.5 rounded-full bg-[#f97316]" style="animation-delay: 0.6s; color: #f97316;">
+        </div>
+        <div class="dot-pulse w-2.5 h-2.5 rounded-full bg-[#ffffff]" style="animation-delay: 0.7s; color: #ffffff;">
+        </div>
+        <div class="dot-pulse w-2.5 h-2.5 rounded-full bg-[#f97316]" style="animation-delay: 0.8s; color: #f97316;">
+        </div>
+        <div class="dot-pulse w-2.5 h-2.5 rounded-full bg-[#ffffff]" style="animation-delay: 0.9s; color: #ffffff;">
         </div>
       </div>
-      <div class="mt-4 text-xs md:text-sm text-slate-500 font-mono uppercase tracking-[0.25em]">
-        Exhibition Portal by <span class="text-blue-500 font-extrabold">VYRONIX Labs</span>
+
+      <!-- Loading Bar Status Indicators -->
+      <div class="w-full max-w-md mt-4">
+        <div class="flex justify-between items-center px-0.5">
+          <span id="preloaderStatusText"
+            class="font-mono text-[9px] md:text-xs text-orange-400/80 uppercase tracking-[0.2em] max-w-[75%] overflow-hidden text-ellipsis whitespace-nowrap">SYS_BOOT:
+            INITIALIZING ENVIRONMENT...</span>
+          <span id="preloaderPercent"
+            class="font-mono text-[9px] md:text-xs text-slate-300 font-extrabold tracking-wider">0%</span>
+        </div>
+        <div class="w-full h-[3px] bg-white/5 rounded-full overflow-hidden mt-2 relative">
+          <div id="preloaderBarFill"
+            class="w-0 h-full bg-gradient-to-r from-orange-600 via-orange-300 to-white rounded-full transition-all duration-[100ms] ease-out shadow-[0_0_15px_rgba(249,115,22,0.7)]">
+          </div>
+        </div>
       </div>
+
     </div>
   </div>
+
 
   <!-- MAIN CONSOLE CARD -->
   <main
-    class="w-full max-w-xl bg-slate-900/65 backdrop-blur-xl border border-slate-800/80 rounded-3xl p-6 md:p-8 shadow-2xl z-10 relative my-8">
+    class="w-full max-w-xl glass-card rounded-[32px] p-6 md:p-8 z-10 relative mt-24 mb-16 flex flex-col justify-between">
     <div class="text-center mb-8">
       <!-- Logo Image (Bigger) -->
       <img src="depaul-school-logo.png" alt="De Paul School Logo"
-        class="w-36 h-36 object-contain mx-auto mb-4 hover:scale-105 hover:rotate-2 transition-transform duration-300 filter drop-shadow-[0_0_15px_rgba(239,68,68,0.15)]" />
+        class="w-36 h-36 object-contain mx-auto mb-4 hover:scale-105 hover:rotate-2 transition-transform duration-300 filter drop-shadow-[0_0_20px_rgba(249,115,22,0.25)]" />
       <h1 class="font-display font-extrabold text-2xl md:text-3xl text-white tracking-wide uppercase">DE PAUL SCHOOL
       </h1>
-      <p class="font-cursive text-slate-300 text-3xl mt-2 tracking-normal normal-case">Exhibition Feedback Console</p>
+      <p class="font-cursive text-slate-200 text-3xl mt-2 tracking-normal normal-case">Exhibition Feedback Console</p>
+
+
     </div>
 
     <form id="feedbackForm" class="space-y-6">
       <!-- Hidden Input for Rating -->
       <input type="hidden" id="ratingSlider" value="" />
 
+      <!-- DYNAMIC DID YOU KNOW CARD (ALL TIME) -->
+      <div
+        class="p-4 bg-orange-500/5 border border-orange-500/10 rounded-[20px] text-left space-y-1 font-sans transition-all duration-500"
+        id="factBox">
+        <span class="text-orange-400 font-bold uppercase tracking-wider text-[10px] md:text-xs">💡 Did You Know?</span>
+        <p id="liveFact"
+          class="text-slate-200 text-xs md:text-sm italic font-sans normal-case transition-opacity duration-300">
+          Continuous learning builds active minds!</p>
+      </div>
+
       <!-- Student Name Input -->
       <div class="space-y-2">
         <label for="studentName" class="block text-xs font-bold text-slate-400 tracking-wider uppercase">Student
           Name</label>
         <input type="text" id="studentName" required placeholder="Enter full name" autocomplete="off"
-          class="w-full bg-slate-950/80 border border-slate-800 rounded-2xl px-4 py-3 text-white font-medium placeholder-slate-600 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30 transition-all" />
+          class="w-full glass-input rounded-2xl px-4 py-3.5 text-white font-medium placeholder-slate-500 outline-none" />
       </div>
 
       <!-- Clickable Rating grid -->
@@ -138,34 +413,34 @@
         </label>
         <div class="grid grid-cols-5 md:grid-cols-10 gap-2" id="ratingsContainer">
           <button type="button"
-            class="rating-btn h-12 bg-slate-950/80 hover:bg-slate-800 border border-slate-800 rounded-xl font-mono text-sm font-semibold text-slate-400 hover:text-white transition-all active:scale-95 flex items-center justify-center"
+            class="rating-btn h-12 bg-white/[0.03] hover:bg-white/[0.08] border border-white/10 rounded-xl font-mono text-sm font-semibold text-slate-400 hover:text-white transition-all active:scale-95 flex items-center justify-center"
             data-value="1">1</button>
           <button type="button"
-            class="rating-btn h-12 bg-slate-950/80 hover:bg-slate-800 border border-slate-800 rounded-xl font-mono text-sm font-semibold text-slate-400 hover:text-white transition-all active:scale-95 flex items-center justify-center"
+            class="rating-btn h-12 bg-white/[0.03] hover:bg-white/[0.08] border border-white/10 rounded-xl font-mono text-sm font-semibold text-slate-400 hover:text-white transition-all active:scale-95 flex items-center justify-center"
             data-value="2">2</button>
           <button type="button"
-            class="rating-btn h-12 bg-slate-950/80 hover:bg-slate-800 border border-slate-800 rounded-xl font-mono text-sm font-semibold text-slate-400 hover:text-white transition-all active:scale-95 flex items-center justify-center"
+            class="rating-btn h-12 bg-white/[0.03] hover:bg-white/[0.08] border border-white/10 rounded-xl font-mono text-sm font-semibold text-slate-400 hover:text-white transition-all active:scale-95 flex items-center justify-center"
             data-value="3">3</button>
           <button type="button"
-            class="rating-btn h-12 bg-slate-950/80 hover:bg-slate-800 border border-slate-800 rounded-xl font-mono text-sm font-semibold text-slate-400 hover:text-white transition-all active:scale-95 flex items-center justify-center"
+            class="rating-btn h-12 bg-white/[0.03] hover:bg-white/[0.08] border border-white/10 rounded-xl font-mono text-sm font-semibold text-slate-400 hover:text-white transition-all active:scale-95 flex items-center justify-center"
             data-value="4">4</button>
           <button type="button"
-            class="rating-btn h-12 bg-slate-950/80 hover:bg-slate-800 border border-slate-800 rounded-xl font-mono text-sm font-semibold text-slate-400 hover:text-white transition-all active:scale-95 flex items-center justify-center"
+            class="rating-btn h-12 bg-white/[0.03] hover:bg-white/[0.08] border border-white/10 rounded-xl font-mono text-sm font-semibold text-slate-400 hover:text-white transition-all active:scale-95 flex items-center justify-center"
             data-value="5">5</button>
           <button type="button"
-            class="rating-btn h-12 bg-slate-950/80 hover:bg-slate-800 border border-slate-800 rounded-xl font-mono text-sm font-semibold text-slate-400 hover:text-white transition-all active:scale-95 flex items-center justify-center"
+            class="rating-btn h-12 bg-white/[0.03] hover:bg-white/[0.08] border border-white/10 rounded-xl font-mono text-sm font-semibold text-slate-400 hover:text-white transition-all active:scale-95 flex items-center justify-center"
             data-value="6">6</button>
           <button type="button"
-            class="rating-btn h-12 bg-slate-950/80 hover:bg-slate-800 border border-slate-800 rounded-xl font-mono text-sm font-semibold text-slate-400 hover:text-white transition-all active:scale-95 flex items-center justify-center"
+            class="rating-btn h-12 bg-white/[0.03] hover:bg-white/[0.08] border border-white/10 rounded-xl font-mono text-sm font-semibold text-slate-400 hover:text-white transition-all active:scale-95 flex items-center justify-center"
             data-value="7">7</button>
           <button type="button"
-            class="rating-btn h-12 bg-slate-950/80 hover:bg-slate-800 border border-slate-800 rounded-xl font-mono text-sm font-semibold text-slate-400 hover:text-white transition-all active:scale-95 flex items-center justify-center"
+            class="rating-btn h-12 bg-white/[0.03] hover:bg-white/[0.08] border border-white/10 rounded-xl font-mono text-sm font-semibold text-slate-400 hover:text-white transition-all active:scale-95 flex items-center justify-center"
             data-value="8">8</button>
           <button type="button"
-            class="rating-btn h-12 bg-slate-950/80 hover:bg-slate-800 border border-slate-800 rounded-xl font-mono text-sm font-semibold text-slate-400 hover:text-white transition-all active:scale-95 flex items-center justify-center"
+            class="rating-btn h-12 bg-white/[0.03] hover:bg-white/[0.08] border border-white/10 rounded-xl font-mono text-sm font-semibold text-slate-400 hover:text-white transition-all active:scale-95 flex items-center justify-center"
             data-value="9">9</button>
           <button type="button"
-            class="rating-btn h-12 bg-slate-950/80 hover:bg-slate-800 border border-slate-800 rounded-xl font-mono text-sm font-semibold text-slate-400 hover:text-white transition-all active:scale-95 flex items-center justify-center"
+            class="rating-btn h-12 bg-white/[0.03] hover:bg-white/[0.08] border border-white/10 rounded-xl font-mono text-sm font-semibold text-slate-400 hover:text-white transition-all active:scale-95 flex items-center justify-center"
             data-value="10">10</button>
         </div>
         <div class="flex justify-between text-[10px] font-mono text-slate-500 tracking-wider uppercase px-1 pt-1">
@@ -179,22 +454,22 @@
       <div class="space-y-2">
         <label for="remarks" class="block text-xs font-bold text-slate-400 tracking-wider uppercase">Remarks</label>
         <textarea id="remarks" rows="4" placeholder="Share your thoughts about the exhibition..."
-          class="w-full bg-slate-950/80 border border-slate-800 rounded-2xl px-4 py-3 text-white font-medium placeholder-slate-600 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30 transition-all resize-none"></textarea>
+          class="w-full glass-input rounded-2xl px-4 py-3.5 text-white font-medium placeholder-slate-500 outline-none resize-none"></textarea>
       </div>
 
       <!-- Submit button -->
       <button type="submit" id="transmitBtn"
-        class="w-full bg-blue-600 hover:bg-blue-500 text-white font-display font-bold py-4 rounded-2xl transition-all duration-200 active:scale-[0.98] shadow-lg shadow-blue-600/20 tracking-wider uppercase text-sm">
+        class="w-full glass-button-primary font-display font-bold py-4 rounded-2xl tracking-wider uppercase text-sm">
         Submit Feedback
       </button>
       <p id="formStatus" class="text-center font-mono text-xs text-slate-500 min-h-[16px]" aria-live="polite"></p>
 
       <!-- VYRONIX Labs Branding -->
       <div
-        class="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-center gap-2 text-sm md:text-base text-slate-400 font-mono uppercase tracking-wider">
+        class="mt-6 pt-4 border-t border-white/10 flex items-center justify-center gap-2 text-sm md:text-base text-slate-400 font-mono uppercase tracking-wider">
         <span>Powered by</span>
         <a href="#" target="_blank"
-          class="text-blue-500 font-black text-lg md:text-xl hover:text-blue-400 transition-colors tracking-widest">Swastik
+          class="text-orange-400 font-black text-lg md:text-xl hover:text-orange-300 transition-colors tracking-widest">Swastik
           & Suvajit</a>
       </div>
     </form>
@@ -204,79 +479,39 @@
   <footer
     class="absolute bottom-4 left-0 right-0 text-center text-[11px] md:text-xs text-slate-400 font-mono uppercase tracking-wider pointer-events-none z-10">
     Developed Under <a href="https://vyronix-labsdevs.vercel.app/" target="_blank"
-      class="text-blue-500 font-black text-xs md:text-sm hover:text-blue-400 pointer-events-auto transition-colors tracking-widest">VYRONIX
+      class="text-orange-400 font-black text-xs md:text-sm hover:text-orange-300 pointer-events-auto transition-colors tracking-widest">VYRONIX
       Labs</a> &copy; 2026
   </footer>
 
   <!-- TRANSMITTING LOADER OVERLAY -->
   <div id="loaderOverlay"
-    class="fixed inset-0 bg-slate-950/85 backdrop-blur-md hidden items-center justify-center z-[200] opacity-0 transition-opacity duration-300">
-    <div
-      class="text-center flex flex-col items-center max-w-sm w-11/12 p-8 rounded-3xl bg-slate-900 border border-slate-800/80 shadow-2xl">
-      <div class="relative w-36 h-36 mb-6 flex items-center justify-center">
-        <!-- Logo Image (Bigger) -->
-        <img src="depaul-school-logo.png" alt="De Paul School Logo" class="w-28 h-28 object-contain animate-pulse" />
-        <!-- Scan ring around logo -->
-        <div class="absolute inset-0 border-2 border-dashed border-blue-500/40 rounded-full animate-spin"></div>
+    class="fixed inset-0 bg-[#07080e]/40 backdrop-blur-2xl hidden items-center justify-center z-[200] opacity-0 transition-opacity duration-300">
+    <div class="text-center flex flex-col items-center max-w-sm w-11/12 p-8 rounded-[32px] glass-card">
+      <div class="w-36 h-36 mb-6 flex items-center justify-center">
+        <!-- Logo Image -->
+        <img src="depaul-school-logo.png" alt="De Paul School Logo"
+          class="w-24 h-24 object-contain animate-[preloaderPulse_1.5s_infinite_ease-in-out]" />
       </div>
-      <h3 class="font-display font-bold text-lg text-white tracking-wider uppercase">TRANSMITTING DATA</h3>
-      <p class="loader-status font-mono text-xs text-slate-400 mt-1 tracking-wider uppercase">Establishing connection...
+      <h3 class="font-display font-bold text-lg text-white tracking-wider uppercase">Transmitting Data</h3>
+      <p class="loader-status font-mono text-xs text-slate-400 mt-2 tracking-wider uppercase">Establishing connection...
       </p>
-      <div class="w-full h-1 bg-slate-800 rounded-full overflow-hidden mt-6">
+      <div class="w-full h-1.5 bg-white/5 border border-white/10 rounded-full overflow-hidden mt-6">
         <div id="progressBarFill"
-          class="w-0 h-full bg-gradient-to-r from-blue-600 to-sky-400 rounded-full transition-all duration-[1300ms] ease-out">
+          class="w-0 h-full bg-gradient-to-r from-orange-600 via-orange-400 to-white rounded-full transition-all duration-[1300ms] ease-out shadow-[0_0_15px_rgba(249,115,22,0.6)]">
         </div>
       </div>
     </div>
   </div>
 
-  <!-- SUCCESS MODAL OVERLAY -->
-  <div id="modalOverlay"
-    class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center p-4 z-[100]">
-    <div class="max-w-md w-full bg-slate-900 border border-slate-800 rounded-3xl p-6 md:p-8 text-center shadow-2xl">
-      <h2 id="modalTitle" class="font-display font-bold text-2xl text-emerald-400 uppercase tracking-wide">Feedback
-        Transmitted</h2>
 
-      <!-- SUBMITTED FEEDBACK SUMMARY CARD -->
-      <div
-        class="my-4 p-4 bg-slate-950/60 border border-slate-800/80 rounded-2xl text-left space-y-2 text-xs md:text-sm font-sans">
-        <p class="text-slate-500 font-bold uppercase tracking-wider text-[10px] md:text-xs">Your Feedback Submission:
-        </p>
-        <div class="h-px bg-slate-800/50 my-1"></div>
-        <p class="text-slate-300"><span class="text-slate-400 font-bold">NAME:</span> <span id="summaryName"
-            class="text-white font-medium uppercase font-sans"></span></p>
-        <p class="text-slate-300"><span class="text-slate-400 font-bold">RATING:</span> <span id="summaryRating"
-            class="text-blue-400 font-mono font-bold"></span><span class="text-slate-600 font-mono">/10</span></p>
-        <p class="text-slate-300"><span class="text-slate-400 font-bold">REMARKS:</span> <span id="summaryRemarks"
-            class="text-slate-200 italic font-sans normal-case"></span></p>
-      </div>
-
-      <!-- RANDOM EDUCATIONAL FACT CARD -->
-      <div class="my-4 p-4 bg-blue-950/40 border border-blue-800/40 rounded-2xl text-left space-y-1 font-sans">
-        <span class="text-blue-400 font-bold uppercase tracking-wider text-[10px] md:text-xs">💡 Did You Know?</span>
-        <p id="summaryFact" class="text-slate-200 text-xs md:text-sm italic font-sans normal-case"></p>
-      </div>
-
-      <p id="modalMessage" class="text-slate-300 mt-2 text-sm leading-relaxed">Thank you. Your response has been
-        successfully logged.</p>
-      <div class="h-px bg-slate-800 my-4"></div>
-      <p class="font-cursive text-slate-300 text-3xl tracking-normal normal-case">Explore Vyronix Labs initiatives?</p>
-      <div class="flex gap-3 mt-4">
-        <button id="modalYes"
-          class="flex-1 bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 px-4 rounded-xl text-xs uppercase tracking-wider transition-all duration-150 active:scale-95">Yes,
-          take me there</button>
-        <button id="modalNo"
-          class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold py-3 px-4 rounded-xl text-xs uppercase tracking-wider transition-all duration-150 active:scale-95">No,
-          close</button>
-      </div>
-    </div>
-  </div>
 
   <!-- EMOJI CELEBRATION OVERLAY -->
-  <div id="emojiOverlay" class="fixed inset-0 bg-slate-950/90 backdrop-blur-md hidden items-center justify-center p-4 z-[150] opacity-0 transition-opacity duration-300">
-    <div class="max-w-sm w-full bg-slate-900 border border-slate-800 rounded-3xl p-8 text-center shadow-2xl flex flex-col items-center justify-center space-y-4">
+  <div id="emojiOverlay"
+    class="fixed inset-0 bg-[#07080e]/40 backdrop-blur-2xl hidden items-center justify-center p-4 z-[150] opacity-0 transition-opacity duration-300">
+    <div
+      class="max-w-sm w-full glass-card rounded-[32px] p-8 text-center flex flex-col items-center justify-center space-y-4">
       <div class="text-7xl animate-bounce">😊</div>
-      <h2 class="font-display font-bold text-2xl text-blue-400 uppercase tracking-wider">Submitted Successfully!</h2>
+      <h2 class="font-display font-bold text-2xl text-white uppercase tracking-wider">Submitted Successfully!</h2>
       <p class="text-slate-400 font-mono text-xs uppercase tracking-wider">Thank you for your valuable feedback! 😄</p>
     </div>
   </div>
@@ -297,11 +532,6 @@
     const form = document.getElementById('feedbackForm');
     const transmitBtn = document.getElementById('transmitBtn');
     const formStatus = document.getElementById('formStatus');
-    const modalOverlay = document.getElementById('modalOverlay');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalMessage = document.getElementById('modalMessage');
-    const modalYes = document.getElementById('modalYes');
-    const modalNo = document.getElementById('modalNo');
 
     // Dynamic Ambient Light Feature (Cursor Follow)
     const cursorGlow = document.getElementById('cursorGlow');
@@ -316,22 +546,55 @@
       });
     }
 
-
-    // PRELOADER LOGIC (2.5 seconds)
+    // PRELOADER LOGIC (Futuristic Boot Sequence)
     window.addEventListener('load', () => {
       const preloader = document.getElementById('preloaderOverlay');
       const preloaderFill = document.getElementById('preloaderBarFill');
+      const percentCounter = document.getElementById('preloaderPercent');
+      const statusText = document.getElementById('preloaderStatusText');
 
-      // Animate progress bar fill steadily over 2s
-      preloaderFill.style.width = '100%';
+      let progress = 0;
+      const duration = 2500; // 2.5 seconds
+      const intervalTime = 30; // update every 30ms
+      const increment = 100 / (duration / intervalTime);
 
-      // Dismiss after 2.5 seconds
-      setTimeout(() => {
-        preloader.classList.add('opacity-0', 'pointer-events-none');
-        setTimeout(() => {
-          preloader.style.display = 'none';
-        }, 500);
-      }, 2500);
+      const statusMessages = [
+        "SYS_BOOT: INITIALIZING ENVIRONMENT...",
+        "SYS_BOOT: RESOLVING WEB STYLESHEETS...",
+        "SYS_BOOT: ESTABLISHING NETWORK INTERFACES...",
+        "SYS_BOOT: DOCKING WEB APP SERVICES...",
+        "SYS_BOOT: SECURE TUNNEL ESTABLISHED...",
+        "SYS_BOOT: LOADING CONSOLE DATA...",
+        "SYS_BOOT: BOOT COMPLETION SUCCESSFUL"
+      ];
+
+      const timer = setInterval(() => {
+        progress += increment;
+        if (progress >= 100) {
+          progress = 100;
+          clearInterval(timer);
+
+          // Dismiss preloader
+          setTimeout(() => {
+            preloader.classList.add('opacity-0', 'pointer-events-none');
+            setTimeout(() => {
+              preloader.style.display = 'none';
+            }, 500);
+          }, 300);
+        }
+
+        // Update progress bar & percentage text
+        const currentPercent = Math.floor(progress);
+        if (preloaderFill) preloaderFill.style.width = currentPercent + '%';
+        if (percentCounter) percentCounter.textContent = currentPercent + '%';
+
+        // Rotate status text messages based on percentage progress
+        const messageIndex = Math.min(
+          Math.floor((currentPercent / 100) * statusMessages.length),
+          statusMessages.length - 1
+        );
+        if (statusText) statusText.textContent = statusMessages[messageIndex];
+      }, intervalTime);
     });
 
     // Mood Range Class Helper
@@ -354,14 +617,14 @@
 
         if (val === r) {
           if (mood === 'low') {
-            btn.classList.add('bg-red-500/20', 'text-red-400', 'border-red-500/80', 'shadow-[0_0_15px_rgba(239,68,68,0.3)]', 'border-2');
+            btn.classList.add('bg-white/15', 'text-white', 'border-white/60', 'shadow-[0_0_20px_rgba(255,255,255,0.35)]', 'border-2');
           } else if (mood === 'mid') {
-            btn.classList.add('bg-amber-500/20', 'text-amber-400', 'border-amber-500/80', 'shadow-[0_0_15px_rgba(245,158,11,0.3)]', 'border-2');
+            btn.classList.add('bg-orange-400/15', 'text-orange-300', 'border-orange-400/60', 'shadow-[0_0_20px_rgba(251,146,60,0.35)]', 'border-2');
           } else {
-            btn.classList.add('bg-emerald-500/20', 'text-emerald-400', 'border-emerald-500/80', 'shadow-[0_0_15px_rgba(16,185,129,0.3)]', 'border-2');
+            btn.classList.add('bg-orange-500/25', 'text-orange-300', 'border-orange-500/80', 'shadow-[0_0_20px_rgba(249,115,22,0.45)]', 'border-2');
           }
         } else {
-          btn.classList.add('bg-slate-950/80', 'hover:bg-slate-800', 'border-slate-800', 'text-slate-400', 'hover:text-white', 'border');
+          btn.classList.add('bg-white/[0.03]', 'hover:bg-white/[0.08]', 'border-white/10', 'text-slate-400', 'hover:text-white', 'border');
         }
       });
     }
@@ -374,6 +637,7 @@
         updateReadout(val);
       });
     });
+
     // Educational facts database
     const EDUCATIONAL_FACTS = [
       "Writing notes by hand engages motor skills and improves long-term memory retention more than typing.",
@@ -396,75 +660,25 @@
       "Asking questions active-recalls material, forming stronger synaptic connections in the cerebral cortex."
     ];
 
-    // Check if there is an existing submission on page load/reload
-    function checkExistingSubmission() {
-      const submitted = localStorage.getItem('feedbackSubmitted');
-
-      if (submitted === 'true') {
-        const summaryName = localStorage.getItem('submittedName') || 'N/A';
-        const summaryRating = localStorage.getItem('submittedRating') || '5';
-        const summaryRemarks = localStorage.getItem('submittedRemarks') || 'None';
-        const summaryFact = localStorage.getItem('submittedFact') || "Continuous learning builds active minds!";
-
-        // Hide form
-        form.classList.add('hidden');
-
-        // Check if thankYouContainer already exists
-        let thankYouContainer = document.getElementById('thankYouContainer');
-        if (!thankYouContainer) {
-          thankYouContainer = document.createElement('div');
-          thankYouContainer.id = 'thankYouContainer';
-          thankYouContainer.className = 'space-y-6 text-center mt-6';
-          thankYouContainer.innerHTML = `
-            <div class="p-6 bg-slate-950/80 border border-slate-800 rounded-3xl text-left space-y-4 font-sans">
-              <h3 class="text-blue-400 font-display font-bold text-lg uppercase tracking-wide">Your Submitted Feedback</h3>
-              <div class="h-px bg-slate-800/80"></div>
-              <div class="space-y-2 text-sm font-sans">
-                <p class="text-slate-300"><span class="text-slate-500 font-bold uppercase">Name:</span> <span class="text-white font-medium uppercase font-sans">${summaryName}</span></p>
-                <p class="text-slate-300"><span class="text-slate-500 font-bold uppercase">Rating:</span> <span class="text-blue-400 font-mono font-bold">${summaryRating}/10</span></p>
-                <p class="text-slate-300"><span class="text-slate-500 font-bold uppercase">Remarks:</span> <span class="text-slate-200 italic font-sans normal-case">${summaryRemarks}</span></p>
-              </div>
-              <div class="h-px bg-slate-800/50 my-2"></div>
-              <div class="space-y-1 font-sans">
-                <span class="text-blue-400 font-bold uppercase tracking-wider text-[10px] md:text-xs">💡 Did You Know?</span>
-                <p class="text-slate-200 text-xs italic font-sans normal-case">${summaryFact}</p>
-              </div>
-            </div>
-            <p class="text-slate-400 text-xs tracking-wider uppercase font-mono">Your response has been securely transmitted.</p>
-            <div class="flex flex-col gap-3">
-              <button id="btnNewFeedback" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold py-3.5 rounded-2xl text-xs uppercase tracking-wider transition-all duration-150 active:scale-95 border border-slate-700/50">
-                Submit New Feedback
-              </button>
-              <a href="projects.html" class="w-full block bg-blue-600 hover:bg-blue-500 text-white font-bold py-3.5 rounded-2xl text-xs uppercase tracking-wider transition-all duration-150 active:scale-95 shadow-lg shadow-blue-600/20 text-center">
-                Explore Vyronix Labs
-              </a>
-            </div>
-          `;
-          form.parentNode.appendChild(thankYouContainer);
-
-          document.getElementById('btnNewFeedback').addEventListener('click', () => {
-            localStorage.removeItem('feedbackSubmitted');
-            localStorage.removeItem('declinedVyronix');
-            localStorage.removeItem('submittedName');
-            localStorage.removeItem('submittedRating');
-            localStorage.removeItem('submittedRemarks');
-            localStorage.removeItem('submittedFact');
-            thankYouContainer.remove();
-            form.classList.remove('hidden');
-            form.reset();
-            slider.value = '';
-            updateReadout('');
-            formStatus.textContent = '';
-          });
-        }
-      }
-    }
-
-    // Set initial rating representation (5)
+    // Set initial rating representation
     updateReadout(slider.value);
 
-    // Check submission status on load
-    checkExistingSubmission();
+    // Dynamic Fact Rotator (All-time dynamic widget)
+    const liveFact = document.getElementById('liveFact');
+    if (liveFact) {
+      let factIndex = 0;
+      const shuffledFacts = [...EDUCATIONAL_FACTS].sort(() => Math.random() - 0.5);
+      liveFact.textContent = shuffledFacts[0];
+
+      setInterval(() => {
+        liveFact.style.opacity = '0';
+        setTimeout(() => {
+          factIndex = (factIndex + 1) % shuffledFacts.length;
+          liveFact.textContent = shuffledFacts[factIndex];
+          liveFact.style.opacity = '1';
+        }, 300);
+      }, 7000);
+    }
 
     // Google Sheets integration
     function sendToGoogleSheets(payload) {
@@ -511,36 +725,6 @@
       }, 1300);
     }
 
-    // Open transmitted response Modal popup
-    function openModal(name, rating, remarks, fact) {
-      const mood = moodClass(rating);
-      if (mood === 'high') {
-        modalTitle.textContent = 'FEEDBACK TRANSMITTED';
-        modalTitle.className = 'font-display font-bold text-2xl text-emerald-400 uppercase tracking-wide';
-        modalMessage.textContent = 'Great to hear! Your response has been logged successfully.';
-      } else if (mood === 'low') {
-        modalTitle.textContent = 'FEEDBACK TRANSMITTED';
-        modalTitle.className = 'font-display font-bold text-2xl text-blue-400 uppercase tracking-wide';
-        modalMessage.textContent = 'Thank you for the honesty. This has been logged so we can improve.';
-      } else {
-        modalTitle.textContent = 'FEEDBACK TRANSMITTED';
-        modalTitle.className = 'font-display font-bold text-2xl text-amber-400 uppercase tracking-wide';
-        modalMessage.textContent = 'Thank you. Your response has been logged successfully.';
-      }
-
-      // Update modal summary card content
-      document.getElementById('summaryName').textContent = name;
-      document.getElementById('summaryRating').textContent = rating;
-      document.getElementById('summaryRemarks').textContent = remarks || 'NONE';
-      document.getElementById('summaryFact').textContent = fact || "Continuous learning builds active minds!";
-
-      modalOverlay.style.display = 'flex';
-    }
-
-    function closeModal() {
-      modalOverlay.style.display = 'none';
-    }
-
     // Handle form submit
     form.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -568,17 +752,7 @@
 
       showLoader(() => {
         transmitBtn.disabled = false;
-        formStatus.textContent = 'Feedback transmitted.';
-
-        // Select a random fact to present to the user
-        const randomFact = EDUCATIONAL_FACTS[Math.floor(Math.random() * EDUCATIONAL_FACTS.length)];
-
-        // Save details to localStorage immediately on transmission success
-        localStorage.setItem('feedbackSubmitted', 'true');
-        localStorage.setItem('submittedName', name);
-        localStorage.setItem('submittedRating', rating);
-        localStorage.setItem('submittedRemarks', remarks || 'None');
-        localStorage.setItem('submittedFact', randomFact);
+        formStatus.textContent = 'Feedback Submitted.';
 
         // Show Emoji Celebration Overlay first
         const emojiOverlay = document.getElementById('emojiOverlay');
@@ -588,34 +762,61 @@
         emojiOverlay.classList.remove('opacity-0');
         emojiOverlay.classList.add('opacity-100');
 
-        // Close after 1.5 seconds and proceed to feedback modal details
+        // Reset the form fields and ratings state immediately
+        form.reset();
+        slider.value = '';
+        updateReadout('');
+
+
+
+        // Close after 1.5 seconds and reset status
         setTimeout(() => {
           emojiOverlay.classList.remove('opacity-100');
           emojiOverlay.classList.add('opacity-0');
           setTimeout(() => {
             emojiOverlay.style.display = 'none';
-            openModal(name, rating, remarks, randomFact);
+            formStatus.textContent = '';
           }, 300);
         }, 1500);
       });
     });
 
-    // Modal click redirect to external URL
-    modalYes.addEventListener('click', () => {
-      window.location.href = 'projects.html';
-    });
+    // Show/hide floating ribbon based on scroll position (visible when not scrolled, hidden when scrolled down)
+    const floatingRibbon = document.getElementById('floatingRibbon');
+    if (floatingRibbon) {
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+          floatingRibbon.style.opacity = '0';
+          floatingRibbon.style.transform = 'translate(-50%, -20px)';
+        } else {
+          floatingRibbon.style.opacity = '1';
+          floatingRibbon.style.transform = 'translate(-50%, 0)';
+        }
+      });
+    }
 
-    // Modal cancel button resets the page form and reloads the page
-    modalNo.addEventListener('click', () => {
-      closeModal();
-      localStorage.removeItem('feedbackSubmitted');
-      localStorage.removeItem('declinedVyronix');
-      localStorage.removeItem('submittedName');
-      localStorage.removeItem('submittedRating');
-      localStorage.removeItem('submittedRemarks');
-      localStorage.removeItem('submittedFact');
-      window.location.reload();
-    });
+    // Rotate text in the floating ribbon periodically with a smooth fade transition
+    const ribbonText = document.getElementById('ribbonText');
+    if (ribbonText) {
+      const RIBBON_PHRASES = [
+        "DE PAUL SCHOOL EXHIBITION 2026",
+        "POWERED BY Swastik & Suvajit",
+        "DISCOVER INNOVATION",
+        "FUTURE SYNTHESIS",
+        "SHAPING THE WORLD",
+        "INVENTING THE FUTURE",
+        "CREATIVE MINDS AT WORK"
+      ];
+      let phraseIndex = 0;
+      setInterval(() => {
+        ribbonText.style.opacity = '0';
+        setTimeout(() => {
+          phraseIndex = (phraseIndex + 1) % RIBBON_PHRASES.length;
+          ribbonText.textContent = RIBBON_PHRASES[phraseIndex];
+          ribbonText.style.opacity = '1';
+        }, 300);
+      }, 5000);
+    }
   </script>
 </body>
 
